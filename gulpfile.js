@@ -106,6 +106,15 @@ gulp.task('pug', function buildHTML() {
       stream: true
     }))
 });
+gulp.task('pug-includes', function buildHTML() {
+  return gulp.src('./pug/includes/*.pug')
+    .pipe(pug())
+    .pipe(beautify())
+    .pipe(gulp.dest('./includes/'))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
+});
 // Default task
 gulp.task('default', ['css', 'js', 'vendor']);
 // Configure the browserSync task
@@ -117,7 +126,7 @@ gulp.task('browserSync', function() {
   });
 });
 // Dev task
-gulp.task('dev', ['css', 'js', 'pug', 'browserSync'], function() {
+gulp.task('dev', ['css', 'js', 'pug','pug-includes', 'browserSync'], function() {
   gulp.watch('./pug/**/*', ['pug']);
   gulp.watch('./scss/**/*.scss', ['css']);
   gulp.watch('./js/*.js', ['js']);
